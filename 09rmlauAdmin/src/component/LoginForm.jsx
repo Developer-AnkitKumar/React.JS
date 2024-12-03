@@ -11,7 +11,7 @@ function LoginForm() {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
-    setUserData(storedData); // Retrieve registration data from local storage
+    setUserData(storedData);
   }, []);
 
   const handleLogin = (e) => {
@@ -35,35 +35,35 @@ function LoginForm() {
     <div className="login-form">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Verify Code</label>
-          <input
-            type="text"
-            value={verifyCode}
-            onChange={(e) => setVerifyCode(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+  <div className="form-group">
+    <label>Email</label>
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+  </div>
+  <div className="form-group">
+    <label>Password</label>
+    <input
+      type="password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+  </div>
+  <div className="form-group">
+    <label>Verify Code</label>
+    <input
+      type="text"
+      value={verifyCode}
+      onChange={(e) => setVerifyCode(e.target.value)}
+      required
+    />
+  </div>
+  <button type="submit" className="login-button">Login</button>
+</form>
     </div>
   );
 }
