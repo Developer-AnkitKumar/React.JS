@@ -1,33 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // To navigate post-login
+import React, { useState } from 'react';
+import { loginUser } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
-  const [userData, setUserData] = useState(null);
 
   const navigate = useNavigate(); // For navigation
 
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('userData'));
-    setUserData(storedData);
-  }, []);
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (
-      userData &&
-      email === userData.email &&
-      password === userData.password &&
-      verifyCode === userData.verifyCode
-    ) {
-      alert('Login Successful!');
-      // Navigate to verification pass page
-      navigate('/verify');
-    } else {
-      alert('Invalid Email, Password, or Verify Code!');
+    try {
+      const response = await loginUser({ email, password, verifyCode });
+      if (response.data) {
+        alert('Login Successful!');
+        localStorage.setItem('userData', JSON.stringify(response.data.user));
+        navigate('/verify');
+      }
+    } catch (error) {
+      setError('Invalid Email, Password, or Verify Code!');
     }
   };
 
